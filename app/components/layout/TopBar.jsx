@@ -23,7 +23,7 @@ function TopBar() {
       <div className="flex-none lg:hidden">
         <label
           htmlFor="dashboard-drawer"
-          className="btn btn-square btn-ghost text-green-700 hover:bg-green-50"
+          className="btn btn-square btn-ghost text-[var(--theme-color)] hover:bg-green-50"
         >
           <FiMenu size={22} />
         </label>
@@ -32,7 +32,8 @@ function TopBar() {
       {/* Title */}
       <div className="flex-1">
         <h1 className="text-lg md:text-xl font-bold text-gray-700">
-          Welcome, <span className="text-green-600">{current.email}</span>
+          Welcome,{" "}
+          <span className="text-[var(--theme-color)]">{current.email}</span>
         </h1>
       </div>
 
@@ -49,7 +50,7 @@ function TopBar() {
             role="button"
             className="btn btn-circle avatar placeholder ring ring-green-400 ring-offset-2 ring-offset-white"
           >
-            <div className="bg-green-600 text-white rounded-full w-10 flex items-center justify-center font-semibold">
+            <div className="bg-[var(--theme-color)] text-white rounded-full w-10 flex items-center justify-center font-semibold">
               <span>{personalization?.initial}</span>
             </div>
           </div>
@@ -61,12 +62,12 @@ function TopBar() {
               {current.email}
             </li>
             <li>
-              <a className="flex items-center gap-2 text-gray-700 hover:text-green-600">
+              <a className="flex items-center gap-2 text-gray-700 hover:text-[var(--theme-color)]">
                 <FiUser /> Profile
               </a>
             </li>
             <li>
-              <a className="flex items-center gap-2 text-gray-700 hover:text-green-600">
+              <a className="flex items-center gap-2 text-gray-700 hover:text-[var(--theme-color)]">
                 <FiSettings /> Settings
               </a>
             </li>

@@ -79,7 +79,7 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
       <div className="modal modal-open z-40">
         <div className="modal-box w-full sm:w-11/12 max-w-5xl rounded-2xl shadow-2xl p-0 max-h-[90vh] flex flex-col relative bg-white border border-mint-300">
           {/* Header */}
-          <div className="bg-gradient-to-r from-green-600 to-mint-500 text-white px-4 sm:px-6 py-4 sticky top-0 z-10 rounded-t-2xl flex justify-between items-center">
+          <div className="bg-gradient-to-r from-[var(--theme-color)] to-mint-500 text-white px-4 sm:px-6 py-4 sticky top-0 z-10 rounded-t-2xl flex justify-between items-center">
             <div>
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold truncate">
                 {patient.patientName}
@@ -93,7 +93,7 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
             </div>
             <button
               onClick={() => setEditMode((prev) => !prev)}
-              className="btn btn-sm border-none bg-white text-green-700 hover:bg-green-100"
+              className="btn btn-sm border-none bg-white text-[var(--theme-color)] hover:bg-green-100"
             >
               {editMode ? "Cancel" : "Edit"}
             </button>
@@ -229,7 +229,7 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
             )}
             <button
               onClick={onClose}
-              className="btn bg-green-500 hover:bg-green-600 text-white border-none"
+              className="btn bg-[var(--theme-color)] hover:bg-[var(--theme-color)] text-white border-none"
             >
               Close
             </button>
@@ -267,7 +267,9 @@ function EditableField({ label, name, value, editMode, onChange, type }) {
 
   return (
     <div className="flex flex-col">
-      <span className="text-sm font-semibold text-green-700">{label}</span>
+      <span className="text-sm font-semibold text-[var(--theme-color)]">
+        {label}
+      </span>
       {editMode ? (
         type === "textarea" ? (
           <textarea
@@ -288,7 +290,7 @@ function EditableField({ label, name, value, editMode, onChange, type }) {
           />
         )
       ) : (
-        <span className="text-base text-green-900">
+        <span className="text-base text-[var(--theme-color)]">
           {type === "date" && value
             ? new Date(value).toLocaleDateString("en-US", {
                 year: "numeric",
@@ -308,11 +310,13 @@ function SectionCard({ title, count, onClick }) {
       onClick={onClick}
       className="p-4 bg-white rounded-xl shadow-sm border border-mint-300 hover:shadow-md hover:bg-mint-100 cursor-pointer transition"
     >
-      <h4 className="font-semibold text-green-700 flex items-center justify-between">
+      <h4 className="font-semibold text-[var(--theme-color)] flex items-center justify-between">
         {title}
-        <span className="ml-2 text-green-500 text-sm">({count})</span>
+        <span className="ml-2 text-[var(--theme-color)] text-sm">
+          ({count})
+        </span>
       </h4>
-      <p className="text-xs text-green-600 mt-1">
+      <p className="text-xs text-[var(--theme-color)] mt-1">
         {count > 0 ? "View details" : `Add ${title}`}
       </p>
     </div>

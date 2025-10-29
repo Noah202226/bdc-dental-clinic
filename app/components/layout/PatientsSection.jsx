@@ -69,16 +69,16 @@ export default function PatientsSection() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-green-600 flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-[var(--theme-color)] flex items-center gap-2">
             👥 Patients
           </h1>
-          <p className="text-sm text-green-600">
+          <p className="text-sm text-[var(--theme-color)]">
             Manage and view patient records
           </p>
         </div>
         <button
           onClick={() => setIsOpen(true)}
-          className={`btn bg-green-600 hover:bg-[#5A54E0] text-white border-none flex items-center gap-2 rounded-xl shadow transition-all ${
+          className={`btn bg-[var(--theme-color)] hover:bg-[#5A54E0] text-white border-none flex items-center gap-2 rounded-xl shadow transition-all ${
             loading ? "opacity-70 cursor-not-allowed" : "hover:scale-105"
           }`}
           disabled={loading}
@@ -98,17 +98,17 @@ export default function PatientsSection() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="stat bg-green-400 backdrop-blur rounded-2xl p-4 shadow-md border border-[#B3E6C2]">
+        <div className="stat bg-[var(--theme-color)]/50 backdrop-blur rounded-2xl p-4 shadow-md border border-[#B3E6C2]">
           <div className="stat-title text-gray-600">Total Patients</div>
           <div className="stat-value text-white">{patients.length}</div>
         </div>
-        <div className="stat bg-green-400 backdrop-blur rounded-2xl p-4 shadow-md border border-[#B3E6C2]">
+        <div className="stat bg-[var(--theme-color)]/50 backdrop-blur rounded-2xl p-4 shadow-md border border-[#B3E6C2]">
           <div className="stat-title text-gray-600">Active Patients</div>
-          <div className="stat-value text-green-600">
+          <div className="stat-value text-[var(--theme-color)]">
             {patients.filter((p) => p.balance === 0).length}
           </div>
         </div>
-        <div className="stat bg-green-400 backdrop-blur rounded-2xl p-4 shadow-md border border-[#B3E6C2]">
+        <div className="stat bg-[var(--theme-color)]/50 backdrop-blur rounded-2xl p-4 shadow-md border border-[#B3E6C2]">
           <div className="stat-title text-gray-600">With Balance</div>
           <div className="stat-value text-error">
             {patients.filter((p) => p.balance > 0).length}
@@ -135,7 +135,7 @@ export default function PatientsSection() {
             {/* Desktop Table */}
             <div className="hidden md:block">
               <table className="table w-full h-full rounded-xl overflow-hidden border border-[#B3E6C2]">
-                <thead className="sticky top-0 bg-green-500 text-gray-600 z-10">
+                <thead className="sticky top-0 bg-[var(--theme-color)] text-gray-600 z-10">
                   <tr className="text-sm text-white">
                     <th>Name</th>
                     <th>Address</th>
@@ -150,14 +150,18 @@ export default function PatientsSection() {
                         key={patient.$id}
                         className="hover:bg-[#D9FFE5]/70 transition-all"
                       >
-                        <td className="font-medium text-green-600">
+                        <td className="font-medium text-[var(--theme-color)]">
                           {patient.patientName}
                         </td>
-                        <td className="text-green-600">{patient.address}</td>
-                        <td className="text-green-600">{patient.contact}</td>
+                        <td className="text-[var(--theme-color)]">
+                          {patient.address}
+                        </td>
+                        <td className="text-[var(--theme-color)]">
+                          {patient.contact}
+                        </td>
                         <td className="flex gap-2 justify-center">
                           <button
-                            className="btn btn-sm bg-green-500 hover:bg-[#2CA6E0] text-white border-none rounded-lg flex items-center gap-1"
+                            className="btn btn-sm bg-[var(--theme-color)] hover:bg-[#2CA6E0] text-white border-none rounded-lg flex items-center gap-1"
                             onClick={() => handleView(patient)}
                           >
                             <FiEye /> View
@@ -234,7 +238,7 @@ export default function PatientsSection() {
 
       {confirmModal.isOpen && (
         <dialog open className="modal">
-          <div className="modal-box rounded-2xl bg-green-600">
+          <div className="modal-box rounded-2xl bg-[var(--theme-color)]">
             <h3 className="font-bold text-xl text-white">⚠ Confirm Delete</h3>
             <p className="py-3 text-lg text-gray-300">
               Are you sure you want to delete{" "}

@@ -139,31 +139,33 @@ export default function NewTransactionModal({ patient, onClose, onSaved }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[99999] bg-black/50 backdrop-blur-sm flex justify-center items-center">
-      <div className="dark:bg-gray-900 w-full max-w-md p-8 rounded-2xl h-full shadow-2xl border border-gray-700 overflow-auto">
+    <div className="fixed inset-0 z-[99999] bg-black/70 backdrop-blur-sm flex justify-center items-center">
+      <div className="bg-white w-full max-w-md p-8 rounded-2xl h-full shadow-2xl border border-gray-700 overflow-auto">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-700">
-          <h2 className="text-lg font-bold text-green-500">New Transaction</h2>
+          <h2 className="text-lg font-bold text-[var(--theme-color)]">
+            New Transaction
+          </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-green-400"
+            className="text-gray-400 hover:text-[var(--theme-color)]"
           >
             <X size={22} />
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-5 space-y-4 h-full">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 ">
           {/* Service selection */}
           <div>
-            <label className="block text-sm mb-1 font-medium text-green-400">
+            <label className="block text-sm mb-1 font-medium text-[var(--theme-color)]">
               Service
             </label>
             <select
               name="serviceId"
               value={form.serviceId}
               onChange={handleServiceChange}
-              className="border border-gray-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-green-400"
+              className="border border-gray-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-[var(--theme-color)]"
               required
             >
               <option value="">Select service</option>
@@ -187,14 +189,14 @@ export default function NewTransactionModal({ patient, onClose, onSaved }) {
 
           {/* Payment Type */}
           <div>
-            <label className="block text-sm mb-1 font-medium text-green-400">
+            <label className="block text-sm mb-1 font-medium text-[var(--theme-color)]">
               Payment Type
             </label>
             <select
               name="paymentType"
               value={form.paymentType}
               onChange={handleChange}
-              className="border border-gray-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-green-400"
+              className="border border-gray-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-[var(--theme-color)]"
               required
             >
               <option value="">Select type</option>
@@ -207,7 +209,7 @@ export default function NewTransactionModal({ patient, onClose, onSaved }) {
           {form.paymentType === "installment" && (
             <>
               <div>
-                <label className="block text-sm mb-1 font-medium text-green-400">
+                <label className="block text-sm mb-1 font-medium text-[var(--theme-color)]">
                   Initial Payment (₱)
                 </label>
                 <input
@@ -216,7 +218,7 @@ export default function NewTransactionModal({ patient, onClose, onSaved }) {
                   value={form.initialPay || ""}
                   onChange={handleChange}
                   placeholder="Enter initial amount"
-                  className="border border-gray-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-green-400"
+                  className="border border-gray-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-[var(--theme-color)]"
                   required
                 />
               </div>
@@ -242,7 +244,7 @@ export default function NewTransactionModal({ patient, onClose, onSaved }) {
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg text-white transition"
+              className="px-4 py-2 bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/80 rounded-lg text-white transition"
             >
               {loading ? "Saving..." : "Save Transaction"}
             </button>

@@ -74,7 +74,7 @@ export default function ExpensesTab() {
   if (loading)
     return (
       <div className="flex justify-center items-center py-10">
-        <Loader2 className="w-6 h-6 animate-spin text-green-600" />
+        <Loader2 className="w-6 h-6 animate-spin text-[var(--theme-color)]" />
         <span className="ml-2 text-gray-600">Loading expenses...</span>
       </div>
     );
@@ -83,10 +83,12 @@ export default function ExpensesTab() {
     <div className="mt-6 space-y-5">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-green-700">Expenses</h2>
+        <h2 className="text-lg font-semibold text-[var(--theme-color)]">
+          Expenses
+        </h2>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg shadow transition"
+          className="flex items-center gap-2 bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/80 hover:cursor-pointer text-white px-3 py-2 rounded-lg shadow transition"
         >
           <PlusCircle size={18} /> Add Expense
         </button>
@@ -94,13 +96,13 @@ export default function ExpensesTab() {
 
       {/* 💰 Summary Section */}
       <div className="bg-white rounded-2xl shadow-md p-5">
-        <h3 className="text-md font-semibold text-green-700 mb-3">
+        <h3 className="text-md font-semibold text-[var(--theme-color)] mb-3">
           Expense Summary
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col bg-green-50 p-4 rounded-xl">
             <span className="text-sm text-gray-600">Total Expenses</span>
-            <span className="text-2xl font-bold text-green-700">
+            <span className="text-2xl font-bold text-[var(--theme-color)]">
               ₱
               {totalExpenses.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -185,7 +187,7 @@ export default function ExpensesTab() {
                   {exp.category || "—"} •{" "}
                   {new Date(exp.dateSpent).toLocaleDateString()}
                 </p>
-                <p className="text-green-700 font-medium">
+                <p className="text-[var(--theme-color)] font-medium">
                   ₱{parseFloat(exp.amount).toLocaleString()}
                 </p>
               </div>
@@ -208,7 +210,7 @@ export default function ExpensesTab() {
       {showModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
-            <h3 className="text-lg font-semibold text-green-700 mb-4">
+            <h3 className="text-lg font-semibold text-[var(--theme-color)] mb-4">
               Add New Expense
             </h3>
             <form onSubmit={handleAddExpense} className="space-y-3">
@@ -271,7 +273,7 @@ export default function ExpensesTab() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow"
+                  className="px-4 py-2 bg-green-500 hover:bg-[var(--theme-color)] text-white rounded-lg shadow"
                 >
                   Save Expense
                 </button>

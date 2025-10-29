@@ -22,7 +22,7 @@ export default function DashboardSection({
     <div className="p-6 space-y-4 min-h-screen">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-green-700 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-[var(--theme-color)] flex items-center gap-2">
           🦷 Clinic Dashboard
         </h1>
         <p className="text-sm text-gray-600">
@@ -102,7 +102,7 @@ export default function DashboardSection({
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Top Services */}
         <div className="bg-white border border-green-100 p-6 rounded-xl shadow hover:shadow-md transition">
-          <h2 className="text-lg font-semibold text-green-700 mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-[var(--theme-color)] mb-4 flex items-center gap-2">
             🪥 Top Services
           </h2>
           {topServices.length > 0 ? (
@@ -126,7 +126,7 @@ export default function DashboardSection({
 
         {/* Revenue Overview */}
         <div className="bg-white border border-green-100 p-6 rounded-xl shadow hover:shadow-md transition">
-          <h2 className="text-lg font-semibold text-green-700 mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-[var(--theme-color)] mb-4 flex items-center gap-2">
             💹 Revenue Overview
           </h2>
           <div className="h-40 flex items-center justify-center bg-green-50 rounded-lg border border-dashed border-green-200">

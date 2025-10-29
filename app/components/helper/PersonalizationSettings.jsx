@@ -36,7 +36,7 @@ export default function PersonalizationSettings() {
 
   if (loading && !personalization)
     return (
-      <div className="flex justify-center items-center py-10 text-green-700">
+      <div className="flex justify-center items-center py-10 text-[var(--theme-color)]">
         <Loader2 className="w-6 h-6 animate-spin mr-2" />
         Loading settings...
       </div>
@@ -44,7 +44,7 @@ export default function PersonalizationSettings() {
 
   return (
     <div className="w-full mx-auto bg-white rounded-2xl shadow-md p-6">
-      <h2 className="text-2xl font-semibold text-green-700 mb-4">
+      <h2 className="text-2xl font-semibold text-[var(--theme-color)] mb-4">
         Personalization
       </h2>
       <p className="text-sm text-gray-600 mb-6">
@@ -58,7 +58,7 @@ export default function PersonalizationSettings() {
           </label>
           <input
             type="text"
-            className="input input-bordered text-green-600 w-full border-green-300"
+            className="input input-bordered text-[var(--theme-color)] bg-white w-full border-green-300"
             placeholder="e.g. DentServe Dental Clinic"
             value={form.businessName}
             onChange={(e) => setForm({ ...form, businessName: e.target.value })}
@@ -71,7 +71,7 @@ export default function PersonalizationSettings() {
           <input
             type="text"
             maxLength={2}
-            className="input input-bordered text-green-600 w-full border-green-300"
+            className="input input-bordered text-[var(--theme-color)] bg-white w-full border-green-300"
             placeholder="e.g. DS"
             value={form.initial}
             onChange={(e) => setForm({ ...form, initial: e.target.value })}
@@ -85,7 +85,7 @@ export default function PersonalizationSettings() {
         <button
           type="submit"
           disabled={loading}
-          className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow mt-4"
+          className="flex items-center gap-2 bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/80 text-white px-5 py-2 rounded-lg shadow mt-4"
         >
           {loading && <Loader2 className="w-4 h-4 animate-spin" />}
           <Save size={16} />

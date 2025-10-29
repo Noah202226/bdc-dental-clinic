@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
         <div
           className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none"
           style={{
-            backgroundImage: "url('/dentserve-logo.png')",
+            backgroundImage: "url('/BDC-Logo.png')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundSize: "400px",

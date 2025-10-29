@@ -59,8 +59,8 @@ export default function DashboardPage() {
   const getLinkClasses = (section) =>
     `flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 ${
       activeSection === section
-        ? "bg-green-600 text-white font-semibold shadow-md"
-        : "text-gray-700 hover:bg-green-100 hover:text-green-700"
+        ? "bg-[var(--theme-color)] text-white font-semibold shadow-md"
+        : "text-gray-700 hover:bg-[var(--theme-color)]/70 hover:text-[var(--theme-color)]"
     }`;
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function DashboardPage() {
         <aside className="w-64 bg-white border-r border-green-100 shadow-sm flex flex-col relative">
           {/* Close Button */}
           <button
-            className="md:hidden absolute top-5 right-2 btn btn-xs btn-circle btn-ghost text-white bg-green-500"
+            className="md:hidden absolute top-5 right-2 btn btn-xs btn-circle btn-ghost text-white bg-[var(--theme-color)]"
             onClick={() =>
               (document.getElementById("dashboard-drawer").checked = false)
             }
@@ -93,7 +93,7 @@ export default function DashboardPage() {
 
           {/* Logo */}
           <div className="p-5 border-b border-green-100">
-            <h2 className="text-2xl font-bold text-green-600">
+            <h2 className="text-2xl font-bold text-[var(--theme-color)]">
               {personalization?.businessName}
             </h2>
           </div>
@@ -101,7 +101,7 @@ export default function DashboardPage() {
           {/* Sidebar Menu */}
           <div className="flex-1 overflow-y-auto">
             <ul className="menu p-4 gap-2 uppercase text-gray-500 text-sm tracking-wide">
-              <li className="menu-title text-green-900 font-semibold">
+              <li className="menu-title text-[var(--theme-color)] font-semibold">
                 Management
               </li>
               <li>
@@ -118,7 +118,7 @@ export default function DashboardPage() {
             </ul>
 
             <ul className="menu p-4 gap-2 uppercase text-gray-500 text-sm tracking-wide">
-              <li className="menu-title text-green-900 font-semibold">
+              <li className="menu-title text-[var(--theme-color)] font-semibold">
                 Reports
               </li>
               <li>
@@ -138,7 +138,7 @@ export default function DashboardPage() {
           {/* Footer / Settings */}
           <div className="p-4 border-t border-green-100 bg-white">
             <ul className="menu">
-              <li className="menu-title text-green-900 font-semibold">
+              <li className="menu-title text-[var(--theme-color)] font-semibold">
                 System
               </li>
               <li>

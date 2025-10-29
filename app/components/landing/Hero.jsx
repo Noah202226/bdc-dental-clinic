@@ -35,7 +35,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-green-50 to-white overflow-hidden">
       {/* Floating Top Bar */}
-      <div className="w-full bg-green-600 text-white py-3 px-6 text-center text-sm md:text-base font-medium flex flex-wrap justify-center gap-x-4">
+      <div className="w-full bg-[var(--theme-color)] text-white py-3 px-6 text-center text-sm md:text-base font-medium flex flex-wrap justify-center gap-x-4">
         <span>🦷 General Dentistry</span>
         <span>•</span>
         <span>Cosmetic Dentistry</span>
@@ -57,7 +57,7 @@ export default function Hero() {
             className="mb-6"
           >
             <Image
-              src="/dentserve-logo.png" // <-- replace with your actual image
+              src="/BDC-Logo.png" // <-- replace with your actual image
               alt="DentServe Dental Clinic Logo"
               width={150}
               height={150}
@@ -73,7 +73,7 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             Welcome to{" "}
-            <span className="text-green-600">DentServe Dental Clinic</span>
+            <span className="text-[var(--theme-color)]">BDC Dental Clinic</span>
           </motion.h1>
 
           {/* Subtext */}
@@ -95,12 +95,11 @@ export default function Hero() {
             transition={{ delay: 0.8, duration: 0.6 }}
           >
             <p className="font-semibold text-gray-700">
-              📍 Unit 108 LSS Building, General Tirona Highway, Habay 2, Bacoor,
-              Cavite
+              📍 563 Brgy, San Fernando, Malvar, Batangas
             </p>
             <p>🕘 Monday – Saturday | 9:00 AM – 6:00 PM</p>
-            <p>📞 Globe: 0956 535 6303 | Smart: 0918 646 0764</p>
-            <p>✉️ dentserve.ph@gmail.com</p>
+            <p>📞 (043)-233-1489 | 0945-310-1085</p>
+            <p>✉️ bellissimadentalclinic@gmail.com</p>
           </motion.div>
         </div>
 

@@ -40,10 +40,12 @@ export default function ServicesTab() {
     <div className="mt-6 space-y-4">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-green-700">Services</h2>
+        <h2 className="text-lg font-semibold text-[var(--theme-color)]">
+          Services
+        </h2>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg shadow transition"
+          className="flex items-center gap-2 bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/80 hover:cursor-pointer text-white px-3 py-2 rounded-lg shadow transition"
         >
           <PlusCircle size={18} /> Add Service
         </button>
@@ -52,7 +54,7 @@ export default function ServicesTab() {
       {/* 🧭 Desktop Table */}
       <div className="hidden md:block overflow-x-auto">
         <table className="min-w-full bg-white rounded-2xl shadow-md overflow-hidden">
-          <thead className="bg-green-600 text-white">
+          <thead className="bg-[var(--theme-color)] text-white">
             <tr>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Description</th>
@@ -103,7 +105,7 @@ export default function ServicesTab() {
                 <p className="text-sm text-gray-500">
                   {srv.serviceDescription || "—"}
                 </p>
-                <p className="text-green-700 font-medium">
+                <p className="text-[var(--theme-color)] font-medium">
                   ₱{parseFloat(srv.servicePrice).toLocaleString()}
                 </p>
               </div>
@@ -126,7 +128,7 @@ export default function ServicesTab() {
       {showModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md">
-            <h3 className="text-lg font-semibold text-green-700 mb-4">
+            <h3 className="text-lg font-semibold text-[var(--theme-color)] mb-4">
               Add New Service
             </h3>
             <form onSubmit={handleAdd} className="space-y-3">
@@ -138,7 +140,7 @@ export default function ServicesTab() {
                   onChange={(e) =>
                     setForm({ ...form, serviceName: e.target.value })
                   }
-                  className="input input-bordered w-full border-green-300"
+                  className="input input-bordered w-full border-green-300 bg-white text-[var(--theme-color)]"
                   placeholder="e.g. Oral Surgery"
                 />
               </div>
@@ -150,7 +152,7 @@ export default function ServicesTab() {
                   onChange={(e) =>
                     setForm({ ...form, serviceDescription: e.target.value })
                   }
-                  className="input input-bordered w-full border-green-300"
+                  className="input input-bordered w-full border-green-300 bg-white text-[var(--theme-color)]"
                   placeholder="e.g. Dental Service"
                 />
               </div>
@@ -164,7 +166,7 @@ export default function ServicesTab() {
                   onChange={(e) =>
                     setForm({ ...form, servicePrice: e.target.value })
                   }
-                  className="input input-bordered w-full border-green-300"
+                  className="input input-bordered w-full bg-white text-[var(--theme-color)] border-green-300"
                   placeholder="₱0.00"
                 />
               </div>
@@ -179,7 +181,7 @@ export default function ServicesTab() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow"
+                  className="px-4 py-2 bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/80 text-white rounded-lg shadow"
                 >
                   Save Service
                 </button>

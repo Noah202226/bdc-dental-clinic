@@ -76,6 +76,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
           remaining: newRemaining,
           serviceName: transaction.serviceName,
           note: form.note,
+          patientName: transaction.patientName,
         }
       );
 
@@ -105,15 +106,15 @@ export default function InstallmentsModal({ transaction, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-sm flex justify-center items-center">
-      <div className=" dark:bg-gray-900 w-full max-w-lg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
+      <div className=" bg-white w-full max-w-lg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-700">
-          <h2 className="text-lg font-bold text-green-500">
+          <h2 className="text-lg font-bold text-[var(--theme-color)]">
             Installments for {transaction.serviceName}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-green-400"
+            className=" hover:text-bg-white text-[var(--theme-color)]"
           >
             <X size={22} />
           </button>
@@ -129,7 +130,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
           </div>
           <div>
             <p className="text-xs text-gray-400 uppercase">Paid</p>
-            <p className="text-sm font-semibold text-green-400">
+            <p className="text-sm font-semibold text-bg-white text-[var(--theme-color)]">
               ₱{totalPaid.toLocaleString()}
             </p>
           </div>
@@ -154,7 +155,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
               {installments.map((i) => (
                 <li
                   key={i.$id}
-                  className="bg-base-200 dark:bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 transition"
+                  className="bg-base-200 dark:bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-bg-white text-[var(--theme-color)] transition"
                 >
                   <div className="flex justify-between items-center">
                     <div>
@@ -193,7 +194,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
                   placeholder="Enter payment amount"
                   value={form.amount}
                   onChange={handleChange}
-                  className="border border-green-600 bg-transparent rounded-lg px-3 py-2 w-full focus:border-green-400"
+                  className="border border-bg-white text-[var(--theme-color)] bg-transparent rounded-lg px-3 py-2 w-full focus:border-bg-white "
                   required
                   min="1"
                   max={remaining}
@@ -201,7 +202,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
                 <button
                   type="submit"
                   disabled={adding}
-                  className="flex items-center gap-1 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg transition"
+                  className="flex items-center gap-1 bg-[var(--theme-color)] hover:bg-bg-white text-white px-3 py-2 rounded-lg transition"
                 >
                   <Plus size={16} /> {adding ? "Adding..." : "Add"}
                 </button>
@@ -211,12 +212,12 @@ export default function InstallmentsModal({ transaction, onClose }) {
                 placeholder="Optional note"
                 value={form.note}
                 onChange={handleChange}
-                className="border border-green-600 bg-transparent rounded-lg px-3 py-2 text-sm focus:border-green-400"
+                className="border border-bg-white text-[var(--theme-color)] bg-transparent rounded-lg px-3 py-2 text-sm focus:border-bg-white "
               ></textarea>
             </form>
           </div>
         ) : (
-          <p className="border-t border-gray-700 bg-transparent px-3 py-3 text-sm text-center text-green-400">
+          <p className="border-t border-gray-700 bg-transparent px-3 py-3 text-sm text-center text-bg-white text-[var(--theme-color)]">
             ✅ Payment Completed
           </p>
         )}

@@ -9,13 +9,13 @@ export default function PaymentSectionCard({ patient }) {
     <>
       {/* Card View */}
       <div
-        className="bg-green-500 p-4 rounded-xl hover:bg-green-400 transition cursor-pointer"
+        className="bg-[var(--theme-color)] p-4 rounded-xl hover:bg-[var(--theme-color)]/50 transition cursor-pointer"
         onClick={() => setOpen(true)}
       >
         <div className="flex justify-between items-center">
-          <h3 className="font-semibold text-lg text-gray-800">Payments</h3>
+          <h3 className="font-semibold text-lg text-white">Payments</h3>
         </div>
-        <p className="text-sm text-gray-600">View and manage payments</p>
+        <p className="text-sm text-gray-200">View and manage payments</p>
       </div>
 
       {/* Modal */}

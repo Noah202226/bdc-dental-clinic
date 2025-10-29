@@ -15,7 +15,9 @@ export default function SettingsSection() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold mb-4 text-green-500">⚙️ Settings</h1>
+      <h1 className="text-2xl font-bold mb-4 text-[var(--theme-color)]">
+        ⚙️ Settings
+      </h1>
       {/* Tabs */}
       <div className="flex space-x-2 border-b border-green-200/50">
         {["Personalization", "Services", "Dentist"].map((tab) => (
@@ -25,8 +27,8 @@ export default function SettingsSection() {
             className={clsx(
               "px-4 py-2 font-semibold rounded-t-md transition",
               activeTab === tab
-                ? "bg-green-500 text-white"
-                : "text-green-600 hover:bg-green-100"
+                ? "bg-[var(--theme-color)] text-white"
+                : "text-[var(--theme-color)] hover:bg-green-100"
             )}
           >
             {tab}

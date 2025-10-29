@@ -55,7 +55,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm p-3">
       <div className="bg-white w-full sm:w-[85vw] md:w-[70vw] lg:w-[60vw] max-h-[85vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-mint-300">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-green-600 to-mint-500 text-white">
+        <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-[var(--theme-color)] to-mint-500 text-white">
           <h2 className="text-lg font-semibold truncate">
             Transactions for{" "}
             <span className="font-bold text-yellow-200">
@@ -65,7 +65,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setOpenNewModal(true)}
-              className="flex items-center gap-1 px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg transition text-sm"
+              className="flex items-center gap-1 px-3 py-1.5 bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/50 text-white rounded-lg transition text-sm"
             >
               <Plus size={16} /> New Transaction
             </button>
@@ -82,7 +82,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
         <div className="grid grid-cols-3 gap-4 p-5 bg-mint-50 border-b border-mint-200 text-center">
           <div>
             <p className="text-xs text-green-700 uppercase">Total Paid</p>
-            <p className="text-xl font-bold text-green-600">
+            <p className="text-xl font-bold text-[var(--theme-color)]">
               ₱{summary.totalPaid.toLocaleString()}
             </p>
           </div>
@@ -103,7 +103,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
         {/* Transactions List */}
         <div className="flex-1 overflow-y-auto p-5 bg-white">
           {loading ? (
-            <p className="text-center text-green-600 py-8 animate-pulse">
+            <p className="text-center text-[var(--theme-color)] py-8 animate-pulse">
               Loading transactions...
             </p>
           ) : transactions.length === 0 ? (
@@ -122,7 +122,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
                       <h3 className="font-semibold text-green-700">
                         {t.serviceName || "Unnamed Service"}
                       </h3>
-                      <p className="text-xs text-green-600">
+                      <p className="text-xs text-[var(--theme-color)]">
                         {t.paymentType || "Transaction"} —{" "}
                         {dayjs(t.dateTransact || t.$createdAt).format(
                           "MMM D, YYYY"
@@ -130,7 +130,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-lg text-green-600">
+                      <p className="font-bold text-lg text-[var(--theme-color)]">
                         ₱{Number(t.paid || 0).toLocaleString()}
                       </p>
                       {t.remaining > 0 ? (
@@ -151,7 +151,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
                     <div className="mt-2 text-right">
                       <button
                         onClick={() => setSelectedInstallment(t)}
-                        className="text-sm text-green-600 hover:underline"
+                        className="text-sm text-[var(--theme-color)] hover:underline"
                       >
                         View Installments
                       </button>
@@ -167,7 +167,7 @@ export default function PaymentModal({ isOpen, onClose, patient }) {
         <div className="border-t border-mint-200 p-4 bg-mint-50 flex justify-end">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white transition"
+            className="px-5 py-2 rounded-lg bg-[var(--theme-color)] hover:bg-[var(--theme-color)]/50 text-white transition"
           >
             Close
           </button>
