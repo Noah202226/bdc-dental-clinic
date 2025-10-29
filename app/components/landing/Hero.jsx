@@ -97,7 +97,7 @@ export default function Hero() {
             <p className="font-semibold text-gray-700">
               📍 563 Brgy, San Fernando, Malvar, Batangas
             </p>
-            <p>🕘 Monday – Saturday | 9:00 AM – 6:00 PM</p>
+            <p>🕘 Monday – Sunday | 9:00 AM – 5:00 PM</p>
             <p>📞 (043)-233-1489 | 0945-310-1085</p>
             <p>✉️ bellissimadentalclinic@gmail.com</p>
           </motion.div>
