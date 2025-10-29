@@ -10,11 +10,20 @@ const DATABASE_ID = process.env.NEXT_PUBLIC_DATABASE_ID;
 const COLLECTION_INSTALLMENTS = "installments";
 const COLLECTION_TRANSACTIONS = "transactions";
 
+// Helper function to get the current date/time in the format required by datetime-local input
+const getCurrentDateTime = () => dayjs().format("YYYY-MM-DDTHH:mm");
+
 export default function InstallmentsModal({ transaction, onClose }) {
   const [installments, setInstallments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [adding, setAdding] = useState(false);
-  const [form, setForm] = useState({ amount: "", note: "" });
+
+  // FIX: Initialize dateTransact to a defined, valid value (current date/time)
+  const [form, setForm] = useState({
+    amount: "",
+    note: "",
+    dateTransact: getCurrentDateTime(), // <--- FIX 1: Defined initial value
+  });
 
   const fetchInstallments = async () => {
     try {
@@ -54,6 +63,12 @@ export default function InstallmentsModal({ transaction, onClose }) {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle date change
+  const handleDateChange = (e) => {
+    const value = e.target.value;
+    setForm((prev) => ({ ...prev, dateTransact: value }));
+  };
+
   // Handle new payment submit
   const handleAddPayment = async (e) => {
     e.preventDefault();
@@ -72,7 +87,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
         {
           transactionId: transaction.$id,
           amount: newPaid,
-          dateTransact: new Date().toISOString(),
+          dateTransact: form.dateTransact,
           remaining: newRemaining,
           serviceName: transaction.serviceName,
           note: form.note,
@@ -93,7 +108,8 @@ export default function InstallmentsModal({ transaction, onClose }) {
       );
 
       // Reset form and refresh data
-      setForm({ amount: "", note: "" });
+      // FIX 2: Explicitly reset dateTransact to a defined value (new current date/time)
+      setForm({ amount: "", note: "", dateTransact: getCurrentDateTime() });
       await fetchInstallments();
     } catch (err) {
       console.error("Error adding installment:", err);
@@ -159,11 +175,11 @@ export default function InstallmentsModal({ transaction, onClose }) {
                 >
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-medium text-green-300">
+                      <p className="font-medium text-[var(--theme-color)]">
                         ₱{Number(i.amount).toLocaleString()}
                       </p>
                       <p className="text-xs text-gray-400">
-                        {dayjs(i.dateTransact).format("MMM D, YYYY")}
+                        {dayjs(i.dateTransact).format("MMM D, YYYY: hh:mm A")}
                       </p>
                     </div>
                     {i.remaining !== undefined && (
@@ -198,6 +214,15 @@ export default function InstallmentsModal({ transaction, onClose }) {
                   required
                   min="1"
                   max={remaining}
+                />
+                <input
+                  type="datetime-local"
+                  name="dateTransact"
+                  placeholder="Select payment date"
+                  value={form.dateTransact} // This value is now guaranteed to be a valid date string
+                  onChange={handleDateChange}
+                  className="border border-bg-white text-[var(--theme-color)] bg-transparent rounded-lg px-3 py-2 w-full focus:border-bg-white "
+                  required
                 />
                 <button
                   type="submit"
