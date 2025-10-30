@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { databases } from "@/app/lib/appwrite";
-import { ID } from "appwrite";
+import { ID, Query } from "appwrite";
 import toast from "react-hot-toast";
 
 import SubSectionModal from "./SubSectionModal";
@@ -14,6 +14,7 @@ import PaymentSectionCard from "./PaymentSectionCard";
 
 const DATABASE_ID = process.env.NEXT_PUBLIC_DATABASE_ID;
 const PATIENTS_COLLECTION_ID = "patients";
+const COLLECTION_TRANSACTIONS = "transactions";
 
 export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
   const [activeSection, setActiveSection] = useState(null);
@@ -25,6 +26,10 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
   const medHistory = useMedicalHistoryStore();
   const treatment = useTreatmentPlanStore();
   const paymentStore = usePaymentStore();
+
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState({ totalPaid: 0, totalRemaining: 0 });
 
   function calculateAge(birthdate) {
     if (!birthdate) return null;
@@ -42,6 +47,7 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
       medHistory.fetchItems(patient.$id);
       treatment.fetchItems(patient.$id);
       setUpdatedPatient({ ...patient });
+      fetchTransactions();
     }
   }, [patient?.$id]);
 
@@ -74,6 +80,33 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
     }
   };
 
+  // Fetch transactions
+  const fetchTransactions = async () => {
+    if (!patient?.$id) return;
+    try {
+      setLoading(true);
+      const res = await databases.listDocuments(
+        DATABASE_ID,
+        COLLECTION_TRANSACTIONS,
+        [Query.equal("patientId", patient.$id), Query.orderDesc("$createdAt")]
+      );
+
+      const docs = res.documents;
+      const totalPaid = docs.reduce((sum, t) => sum + Number(t.paid || 0), 0);
+      const totalRemaining = docs.reduce(
+        (sum, t) => sum + Number(t.remaining || 0),
+        0
+      );
+
+      setTransactions(docs);
+      setSummary({ totalPaid, totalRemaining });
+    } catch (err) {
+      console.error("Error fetching transactions:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="modal modal-open z-40">
@@ -87,7 +120,7 @@ export default function ViewPatientDetailsModal({ patient, isOpen, onClose }) {
               <p className="mt-1 text-sm opacity-90">
                 Payment Balance:{" "}
                 <span className="font-semibold text-yellow-200">
-                  ₱{patient.balance || "0.00"}
+                  ₱{summary.totalRemaining.toLocaleString() || "0.00"}
                 </span>
               </p>
             </div>

@@ -198,32 +198,38 @@ export default function PatientsSection() {
 
             {/* Mobile Card Layout */}
             <div className="grid gap-4 md:hidden">
-              {filteredPatients.map((patient) => (
-                <div
-                  key={patient.$id}
-                  className="card bg-[#C9FDD7]/70 backdrop-blur shadow-md p-4 rounded-2xl border border-[#B3E6C2] hover:shadow-lg transition-all"
-                >
-                  <h2 className="font-semibold text-lg text-primary">
-                    {patient.patientName}
-                  </h2>
-                  <p className="text-sm text-gray-600">{patient.address}</p>
-                  <p className="text-sm">{patient.contact}</p>
-                  <div className="flex gap-2 mt-3">
-                    <button
-                      className="btn btn-info btn-sm flex-1"
-                      onClick={() => handleView(patient)}
+              {
+                // 1. Create a copy of the array and sort it
+                [...filteredPatients]
+                  .sort((a, b) => a.patientName.localeCompare(b.patientName))
+                  // 2. Map over the sorted array
+                  .map((patient) => (
+                    <div
+                      key={patient.$id}
+                      className="card bg-[var(--theme-color)]/30 backdrop-blur shadow-md p-4 rounded-2xl border border-[#B3E6C2] hover:shadow-lg transition-all"
                     >
-                      <FiEye /> View
-                    </button>
-                    <button
-                      className="btn btn-error btn-sm flex-1"
-                      onClick={() => handleDeleteConfirm(patient)}
-                    >
-                      <FiTrash2 /> Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
+                      <h2 className="font-semibold text-lg text-primary">
+                        {patient.patientName}
+                      </h2>
+                      <p className="text-sm text-gray-600">{patient.address}</p>
+                      <p className="text-sm">{patient.contact}</p>
+                      <div className="flex gap-2 mt-3">
+                        <button
+                          className="btn btn-info btn-sm flex-1"
+                          onClick={() => handleView(patient)}
+                        >
+                          <FiEye /> View
+                        </button>
+                        <button
+                          className="btn btn-error btn-sm flex-1"
+                          onClick={() => handleDeleteConfirm(patient)}
+                        >
+                          <FiTrash2 /> Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))
+              }
             </div>
           </div>
         </div>
