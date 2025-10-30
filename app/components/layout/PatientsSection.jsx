@@ -145,36 +145,43 @@ export default function PatientsSection() {
                 </thead>
                 <tbody>
                   {filteredPatients.length > 0 ? (
-                    filteredPatients.map((patient) => (
-                      <tr
-                        key={patient.$id}
-                        className="hover:bg-[#D9FFE5]/70 transition-all"
-                      >
-                        <td className="font-medium text-[var(--theme-color)]">
-                          {patient.patientName}
-                        </td>
-                        <td className="text-[var(--theme-color)]">
-                          {patient.address}
-                        </td>
-                        <td className="text-[var(--theme-color)]">
-                          {patient.contact}
-                        </td>
-                        <td className="flex gap-2 justify-center">
-                          <button
-                            className="btn btn-sm bg-[var(--theme-color)] hover:bg-[#2CA6E0] text-white border-none rounded-lg flex items-center gap-1"
-                            onClick={() => handleView(patient)}
-                          >
-                            <FiEye /> View
-                          </button>
-                          <button
-                            className="btn btn-sm bg-[#F87171] hover:bg-[#EF4444] text-white border-none rounded-lg flex items-center gap-1"
-                            onClick={() => handleDeleteConfirm(patient)}
-                          >
-                            <FiTrash2 /> Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))
+                    // 1. Create a copy of the array and sort it
+                    [...filteredPatients]
+                      .sort((a, b) =>
+                        a.patientName.localeCompare(b.patientName)
+                      )
+                      // 2. Map over the sorted array
+                      .map((patient) => (
+                        <tr
+                          key={patient.$id}
+                          className="hover:bg-[#D9FFE5]/70 transition-all"
+                        >
+                          {/* ... table data cells for patient ... */}
+                          <td className="font-medium text-[var(--theme-color)]">
+                            {patient.patientName}
+                          </td>
+                          <td className="text-[var(--theme-color)]">
+                            {patient.address}
+                          </td>
+                          <td className="text-[var(--theme-color)]">
+                            {patient.contact}
+                          </td>
+                          <td className="flex gap-2 justify-center">
+                            <button
+                              className="btn btn-sm bg-[var(--theme-color)] hover:bg-[#2CA6E0] text-white border-none rounded-lg flex items-center gap-1"
+                              onClick={() => handleView(patient)}
+                            >
+                              <FiEye /> View
+                            </button>
+                            <button
+                              className="btn btn-sm bg-[#F87171] hover:bg-[#EF4444] text-white border-none rounded-lg flex items-center gap-1"
+                              onClick={() => handleDeleteConfirm(patient)}
+                            >
+                              <FiTrash2 /> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
                   ) : (
                     <tr>
                       <td

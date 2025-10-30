@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { databases, ID } from "../../lib/appwrite";
 import { Query } from "appwrite";
-import { X, Plus } from "lucide-react";
+import { X, Plus, Trash2 } from "lucide-react"; // Import Trash2
 import dayjs from "dayjs";
 
 const DATABASE_ID = process.env.NEXT_PUBLIC_DATABASE_ID;
@@ -17,12 +17,13 @@ export default function InstallmentsModal({ transaction, onClose }) {
   const [installments, setInstallments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [adding, setAdding] = useState(false);
+  // State for tracking deletion status
+  const [deletingId, setDeletingId] = useState(null);
 
-  // FIX: Initialize dateTransact to a defined, valid value (current date/time)
   const [form, setForm] = useState({
     amount: "",
     note: "",
-    dateTransact: getCurrentDateTime(), // <--- FIX 1: Defined initial value
+    dateTransact: getCurrentDateTime(),
   });
 
   const fetchInstallments = async () => {
@@ -69,13 +70,65 @@ export default function InstallmentsModal({ transaction, onClose }) {
     setForm((prev) => ({ ...prev, dateTransact: value }));
   };
 
-  // Handle new payment submit
+  // 1. New function: Handle installment deletion
+  const handleDeleteInstallment = async (installment) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to delete this payment of ₱${Number(
+          installment.amount
+        ).toLocaleString()}? This action cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      setDeletingId(installment.$id);
+
+      // 1. Delete the installment document from Appwrite
+      await databases.deleteDocument(
+        DATABASE_ID,
+        COLLECTION_INSTALLMENTS,
+        installment.$id
+      );
+
+      // 2. Recalculate new total paid and remaining
+      const deletedAmount = Number(installment.amount);
+      const newTotalPaid = totalPaid - deletedAmount;
+      const newRemaining = Math.max(transaction.totalAmount - newTotalPaid, 0);
+
+      // 3. Update main transaction record
+      await databases.updateDocument(
+        DATABASE_ID,
+        COLLECTION_TRANSACTIONS,
+        transaction.$id,
+        {
+          paid: newTotalPaid,
+          remaining: newRemaining,
+          status: newRemaining <= 0 ? "paid" : "ongoing",
+        }
+      );
+
+      // 4. Reset deleting state and refresh data
+      setDeletingId(null);
+      await fetchInstallments();
+    } catch (err) {
+      console.error("Error deleting installment:", err);
+      setDeletingId(null);
+    }
+  };
+
+  // Handle new payment submit (Existing logic, ensure it remains correct)
   const handleAddPayment = async (e) => {
     e.preventDefault();
     if (!form.amount) return;
 
     const newPaid = Number(form.amount);
-    const newRemaining = Math.max(remaining - newPaid, 0);
+    // Recalculate remaining based on the *current* totalPaid before the addition
+    const newRemaining = Math.max(
+      transaction.totalAmount - (totalPaid + newPaid),
+      0
+    );
 
     try {
       setAdding(true);
@@ -95,7 +148,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
         }
       );
 
-      // Update main transaction record
+      // Update main transaction record (use the newly calculated values)
       await databases.updateDocument(
         DATABASE_ID,
         COLLECTION_TRANSACTIONS,
@@ -108,7 +161,6 @@ export default function InstallmentsModal({ transaction, onClose }) {
       );
 
       // Reset form and refresh data
-      // FIX 2: Explicitly reset dateTransact to a defined value (new current date/time)
       setForm({ amount: "", note: "", dateTransact: getCurrentDateTime() });
       await fetchInstallments();
     } catch (err) {
@@ -122,7 +174,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-sm flex justify-center items-center">
-      <div className=" bg-white w-full max-w-lg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
+      <div className=" bg-white w-full max-w-lg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden h-[60vh]">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-700">
           <h2 className="text-lg font-bold text-[var(--theme-color)]">
@@ -159,7 +211,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
         </div>
 
         {/* List */}
-        <div className="p-5 max-h-[40vh] overflow-y-auto">
+        <div className="p-5 max-h-[30vh] overflow-y-auto">
           {loading ? (
             <p className="text-center text-gray-400">Loading installments...</p>
           ) : installments.length === 0 ? (
@@ -173,7 +225,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
                   key={i.$id}
                   className="bg-base-200 dark:bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-bg-white text-[var(--theme-color)] transition"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-start">
                     <div>
                       <p className="font-medium text-[var(--theme-color)]">
                         ₱{Number(i.amount).toLocaleString()}
@@ -182,11 +234,26 @@ export default function InstallmentsModal({ transaction, onClose }) {
                         {dayjs(i.dateTransact).format("MMM D, YYYY: hh:mm A")}
                       </p>
                     </div>
-                    {i.remaining !== undefined && (
-                      <p className="text-xs text-red-400">
-                        Remaining: ₱{Number(i.remaining).toLocaleString()}
-                      </p>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {i.remaining !== undefined && (
+                        <p className="text-xs text-red-400">
+                          Remaining: ₱{Number(i.remaining).toLocaleString()}
+                        </p>
+                      )}
+                      {/* 2. Add Delete Button */}
+                      <button
+                        onClick={() => handleDeleteInstallment(i)}
+                        disabled={deletingId === i.$id}
+                        title="Delete Installment"
+                        className="p-1 rounded-full text-red-500 hover:bg-red-500/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {deletingId === i.$id ? (
+                          <span className="text-xs">Deleting...</span>
+                        ) : (
+                          <Trash2 size={16} />
+                        )}
+                      </button>
+                    </div>
                   </div>
                   {i.note && (
                     <p className="text-xs text-gray-500 mt-1 italic">
@@ -212,14 +279,14 @@ export default function InstallmentsModal({ transaction, onClose }) {
                   onChange={handleChange}
                   className="border border-bg-white text-[var(--theme-color)] bg-transparent rounded-lg px-3 py-2 w-full focus:border-bg-white "
                   required
-                  min="1"
+                  min="0"
                   max={remaining}
                 />
                 <input
                   type="datetime-local"
                   name="dateTransact"
                   placeholder="Select payment date"
-                  value={form.dateTransact} // This value is now guaranteed to be a valid date string
+                  value={form.dateTransact}
                   onChange={handleDateChange}
                   className="border border-bg-white text-[var(--theme-color)] bg-transparent rounded-lg px-3 py-2 w-full focus:border-bg-white "
                   required
