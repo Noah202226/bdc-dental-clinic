@@ -174,7 +174,7 @@ export default function InstallmentsModal({ transaction, onClose }) {
 
   return (
     <div className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-sm flex justify-center items-center">
-      <div className=" bg-white w-full max-w-lg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden h-[60vh]">
+      <div className=" bg-white w-full max-w-lg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden h-[70vh]">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b border-gray-700">
           <h2 className="text-lg font-bold text-[var(--theme-color)]">
